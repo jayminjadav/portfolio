@@ -1,8 +1,3 @@
-/*
-  Interactivity Script
-  Pure JavaScript Implementation
-*/
-
 document.addEventListener('DOMContentLoaded', () => {
   // Navigation active state on scroll
   const sections = document.querySelectorAll('section');
@@ -33,6 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', scrollSpy);
   scrollSpy(); // Initial call to set active state on load
 
+  // Header scroll effect
+  const nav = document.querySelector('nav');
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  };
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+
   // Smooth scroll for nav links
   navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -55,22 +62,14 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       navLinksContainer.classList.toggle('active');
-      const icon = menuToggle.querySelector('i');
-      if (icon) {
-        if (navLinksContainer.classList.contains('active')) {
-          icon.className = 'lucide-x';
-        } else {
-          icon.className = 'lucide-menu';
-        }
-      }
+      menuToggle.classList.toggle('active');
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!navLinksContainer.contains(e.target) && !menuToggle.contains(e.target)) {
         navLinksContainer.classList.remove('active');
-        const icon = menuToggle.querySelector('i');
-        if (icon) icon.className = 'lucide-menu';
+        menuToggle.classList.remove('active');
       }
     });
 
@@ -78,8 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinksItems.forEach(link => {
       link.addEventListener('click', () => {
         navLinksContainer.classList.remove('active');
-        const icon = menuToggle.querySelector('i');
-        if (icon) icon.className = 'lucide-menu';
+        menuToggle.classList.remove('active');
       });
     });
   }
@@ -120,10 +118,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }, observerOptions);
 
   const animatedElements = document.querySelectorAll('.skill-card, .project-card, .timeline-item, .stat-card');
-  animatedElements.forEach(el => {
+  animatedElements.forEach((el, index) => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'all 0.6s ease-out';
+    
+    // Add staggered delay for skill cards
+    if (el.classList.contains('skill-card')) {
+      el.style.transitionDelay = `${index * 0.1}s`;
+    }
+    
     observer.observe(el);
   });
 });
