@@ -66,7 +66,7 @@ nav {
 
 nav.scrolled {
   height: 70px;
-  background: rgba(11, 15, 25, 0.9);
+  background: rgba(11, 15, 25, 0.5);
   backdrop-filter: blur(15px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
@@ -327,7 +327,7 @@ section {
 }
 
 #about, #skills, #experience , #projects , #contact {
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .section-header {
